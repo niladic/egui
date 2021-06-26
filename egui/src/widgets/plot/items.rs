@@ -66,14 +66,20 @@ pub(super) trait PlotItem {
     fn get_shapes(&self, transform: &ScreenTransform, shapes: &mut Vec<Shape>);
     fn series_mut(&mut self) -> &mut Values;
     fn get_bounds(&self) -> Bounds;
-    fn closest<'a>(
-        &'a self,
-        ui: &'a Ui,
+    fn find_closest_element(
+        &self,
         pointer: Pos2,
-        transform: &'a ScreenTransform,
+        transform: &ScreenTransform,
+    ) -> Option<ElementDistance>;
+    fn hover_shapes(
+        &self,
+        ui: &Ui,
+        transform: &ScreenTransform,
         show_x: bool,
         show_y: bool,
-    ) -> Option<HoverElement<'a>>;
+        element: ElementRef,
+        shapes: &mut Vec<Shape>,
+    );
     fn name(&self) -> &str;
     fn color(&self) -> Color32;
     fn highlight(&mut self);
@@ -326,16 +332,12 @@ impl PlotItem for Line {
         self.series.get_bounds()
     }
 
-    fn closest<'a>(
-        &'a self,
-        ui: &'a Ui,
+    fn find_closest_element(
+        &self,
         pointer: Pos2,
-        transform: &'a ScreenTransform,
-        show_x: bool,
-        show_y: bool,
-    ) -> Option<HoverElement<'a>> {
+        transform: &ScreenTransform,
+    ) -> Option<ElementDistance> {
         let mut closest_value = None;
-        let mut closest_item = None;
         let mut closest_dist_sq = f32::MAX;
         for value in &self.series.values {
             let pos = transform.position_from_value(value);
@@ -343,35 +345,44 @@ impl PlotItem for Line {
             if dist_sq < closest_dist_sq {
                 closest_dist_sq = dist_sq;
                 closest_value = Some(value);
-                closest_item = Some(self.name());
             }
         }
-        closest_value
-            .zip(closest_item)
-            .map(move |(value, name)| HoverElement {
-                distance_square: closest_dist_sq,
-                hover_shapes: Box::new(move |mut shapes| {
-                    let line_color = if ui.visuals().dark_mode {
-                        Color32::from_gray(100).additive()
-                    } else {
-                        Color32::from_black_alpha(180)
-                    };
+        closest_value.map(|value| ElementDistance {
+            distance_square: closest_dist_sq,
+            element: ElementRef::XY(*value),
+        })
+    }
 
-                    let position = transform.position_from_value(value);
-                    shapes.push(Shape::circle_filled(position, 3.0, line_color));
+    fn hover_shapes(
+        &self,
+        ui: &Ui,
+        transform: &ScreenTransform,
+        show_x: bool,
+        show_y: bool,
+        element: ElementRef,
+        shapes: &mut Vec<Shape>,
+    ) {
+        if let ElementRef::XY(value) = element {
+            let line_color = if ui.visuals().dark_mode {
+                Color32::from_gray(100).additive()
+            } else {
+                Color32::from_black_alpha(180)
+            };
 
-                    rulers_at_value(
-                        ui,
-                        position,
-                        transform,
-                        show_x,
-                        show_y,
-                        *value,
-                        name,
-                        &mut shapes,
-                    );
-                }),
-            })
+            let position = transform.position_from_value(&value);
+            shapes.push(Shape::circle_filled(position, 3.0, line_color));
+
+            rulers_at_value(
+                ui,
+                position,
+                transform,
+                show_x,
+                show_y,
+                value,
+                self.name(),
+                shapes,
+            );
+        }
     }
 
     fn name(&self) -> &str {
@@ -608,16 +619,12 @@ impl PlotItem for Points {
         self.series.get_bounds()
     }
 
-    fn closest<'a>(
-        &'a self,
-        ui: &'a Ui,
+    fn find_closest_element(
+        &self,
         pointer: Pos2,
-        transform: &'a ScreenTransform,
-        show_x: bool,
-        show_y: bool,
-    ) -> Option<HoverElement<'a>> {
+        transform: &ScreenTransform,
+    ) -> Option<ElementDistance> {
         let mut closest_value = None;
-        let mut closest_item = None;
         let mut closest_dist_sq = f32::MAX;
         for value in &self.series.values {
             let pos = transform.position_from_value(value);
@@ -625,35 +632,44 @@ impl PlotItem for Points {
             if dist_sq < closest_dist_sq {
                 closest_dist_sq = dist_sq;
                 closest_value = Some(value);
-                closest_item = Some(self.name());
             }
         }
-        closest_value
-            .zip(closest_item)
-            .map(move |(value, name)| HoverElement {
-                distance_square: closest_dist_sq,
-                hover_shapes: Box::new(move |mut shapes| {
-                    let line_color = if ui.visuals().dark_mode {
-                        Color32::from_gray(100).additive()
-                    } else {
-                        Color32::from_black_alpha(180)
-                    };
+        closest_value.map(move |value| ElementDistance {
+            distance_square: closest_dist_sq,
+            element: ElementRef::XY(*value),
+        })
+    }
 
-                    let position = transform.position_from_value(value);
-                    shapes.push(Shape::circle_filled(position, 3.0, line_color));
+    fn hover_shapes(
+        &self,
+        ui: &Ui,
+        transform: &ScreenTransform,
+        show_x: bool,
+        show_y: bool,
+        element: ElementRef,
+        shapes: &mut Vec<Shape>,
+    ) {
+        if let ElementRef::XY(value) = element {
+            let line_color = if ui.visuals().dark_mode {
+                Color32::from_gray(100).additive()
+            } else {
+                Color32::from_black_alpha(180)
+            };
 
-                    rulers_at_value(
-                        ui,
-                        position,
-                        transform,
-                        show_x,
-                        show_y,
-                        *value,
-                        name,
-                        &mut shapes,
-                    );
-                }),
-            })
+            let position = transform.position_from_value(&value);
+            shapes.push(Shape::circle_filled(position, 3.0, line_color));
+
+            rulers_at_value(
+                ui,
+                position,
+                transform,
+                show_x,
+                show_y,
+                value,
+                self.name(),
+                shapes,
+            );
+        }
     }
 
     fn name(&self) -> &str {
@@ -1051,31 +1067,41 @@ impl PlotItem for BarChart {
         bounds
     }
 
-    fn closest<'a>(
-        &'a self,
-        ui: &'a Ui,
+    fn find_closest_element(
+        &self,
         pointer: Pos2,
-        transform: &'a ScreenTransform,
-        show_x: bool,
-        show_y: bool,
-    ) -> Option<HoverElement<'a>> {
+        transform: &ScreenTransform,
+    ) -> Option<ElementDistance> {
         let mut closest = None;
         let mut closest_dist_sq = f32::MAX;
-        for bar in &self.bars {
+        for (index, bar) in self.bars.iter().enumerate() {
             let box_rect: Rect = transform.rect_from_values(&bar.bounds_min(), &bar.bounds_max());
             let dist_sq = pointer.distance_from_rect_sq(box_rect);
             if dist_sq < closest_dist_sq {
                 closest_dist_sq = dist_sq;
-                closest = Some(bar);
+                closest = Some(index);
             }
         }
-        closest.map(move |bar| HoverElement {
+        closest.map(move |index| ElementDistance {
             distance_square: closest_dist_sq,
-            hover_shapes: Box::new(move |mut shapes| {
-                bar.shapes(transform, true, &mut shapes);
-                bar.rulers(self, ui, transform, show_x, show_y, &mut shapes);
-            }),
+            element: ElementRef::Index(index),
         })
+    }
+
+    fn hover_shapes(
+        &self,
+        ui: &Ui,
+        transform: &ScreenTransform,
+        show_x: bool,
+        show_y: bool,
+        element: ElementRef,
+        shapes: &mut Vec<Shape>,
+    ) {
+        if let ElementRef::Index(index) = element {
+            let element = &self.bars[index];
+            element.shapes(transform, true, shapes);
+            element.rulers(self, ui, transform, show_x, show_y, shapes);
+        }
     }
 
     fn name(&self) -> &str {
@@ -1473,32 +1499,42 @@ impl PlotItem for BoxplotSeries {
         bounds
     }
 
-    fn closest<'a>(
-        &'a self,
-        ui: &'a Ui,
+    fn find_closest_element(
+        &self,
         pointer: Pos2,
-        transform: &'a ScreenTransform,
-        show_x: bool,
-        show_y: bool,
-    ) -> Option<HoverElement<'a>> {
+        transform: &ScreenTransform,
+    ) -> Option<ElementDistance> {
         let mut closest = None;
         let mut closest_dist_sq = f32::MAX;
-        for boxplot in &self.plots {
+        for (index, boxplot) in self.plots.iter().enumerate() {
             let box_rect: Rect =
                 transform.rect_from_values(&boxplot.bounds_min(), &boxplot.bounds_max());
             let dist_sq = pointer.distance_from_rect_sq(box_rect);
             if dist_sq < closest_dist_sq {
                 closest_dist_sq = dist_sq;
-                closest = Some(boxplot);
+                closest = Some(index);
             }
         }
-        closest.map(move |boxplot| HoverElement {
+        closest.map(move |index| ElementDistance {
             distance_square: closest_dist_sq,
-            hover_shapes: Box::new(move |mut shapes| {
-                boxplot.shapes(transform, true, &mut shapes);
-                boxplot.rulers(self, ui, transform, show_x, show_y, &mut shapes);
-            }),
+            element: ElementRef::Index(index),
         })
+    }
+
+    fn hover_shapes(
+        &self,
+        ui: &Ui,
+        transform: &ScreenTransform,
+        show_x: bool,
+        show_y: bool,
+        element: ElementRef,
+        shapes: &mut Vec<Shape>,
+    ) {
+        if let ElementRef::Index(index) = element {
+            let element = &self.plots[index];
+            element.shapes(transform, true, shapes);
+            element.rulers(self, ui, transform, show_x, show_y, shapes);
+        }
     }
 
     fn name(&self) -> &str {
@@ -1518,12 +1554,15 @@ impl PlotItem for BoxplotSeries {
     }
 }
 
-pub(crate) struct HoverElement<'a> {
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub(crate) enum ElementRef {
+    XY(Value),
+    Index(usize),
+}
+
+pub(crate) struct ElementDistance {
     pub(crate) distance_square: f32,
-    // Note: the Box<dyn Fn> here is a compromise between an owned Vec<Shape>
-    //       (overhead of precalculating the shapes) and an impl Fn
-    //       (typing all the way up to PlotItem with trait object safety workarounds)
-    pub(crate) hover_shapes: Box<dyn Fn(&mut Vec<Shape>) + 'a>,
+    pub(crate) element: ElementRef,
 }
 
 fn highlighted_color(mut stroke: Stroke, fill: Color32) -> (Stroke, Color32) {

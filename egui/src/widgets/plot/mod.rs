@@ -661,16 +661,16 @@ impl Prepared {
         let mut closest_item = None;
         let mut closest_dist_sq = interact_radius.powi(2);
         for item in items {
-            if let Some(closest) = item.closest(ui, pointer, transform, *show_x, *show_y) {
+            if let Some(closest) = item.find_closest_element(pointer, transform) {
                 if closest.distance_square < closest_dist_sq {
                     closest_dist_sq = closest.distance_square;
-                    closest_item = Some(closest);
+                    closest_item = Some((item, closest));
                 }
             }
         }
 
-        if let Some(ref mut closest) = closest_item {
-            (closest.hover_shapes)(shapes);
+        if let Some((item, element)) = closest_item {
+            item.hover_shapes(ui, transform, *show_x, *show_y, element.element, shapes);
         } else {
             let value = transform.value_from_position(pointer);
             items::rulers_at_value(ui, pointer, transform, *show_x, *show_y, value, "", shapes);
