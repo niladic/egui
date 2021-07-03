@@ -50,7 +50,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
 
     {
         let mut ctx = egui::CtxRef::default();
-        ctx.begin_frame(raw_input);
+        ctx.begin_frame(raw_input.clone());
         let mut ui = egui::Ui::__test();
         c.bench_function("label &str", |b| {
             b.iter(|| {
@@ -97,6 +97,89 @@ pub fn criterion_benchmark(c: &mut Criterion) {
                 mesh.clear();
             })
         });
+    }
+
+    {
+        fn points_plot(num_of_items: u32, num_of_points: u32) -> egui::plot::Plot {
+            let mut plot = egui::plot::Plot::new("Benchmark");
+            for item_index in 0..num_of_items {
+                plot = plot.points(egui::plot::Points::new(egui::plot::Values::from_values(
+                    (0..num_of_points)
+                        .map(move |p| egui::plot::Value::new(p as f32, (p + item_index) as f32))
+                        .collect(),
+                )));
+            }
+            plot
+        }
+
+        fn lines_plot(num_of_items: u32, num_of_points: u32) -> egui::plot::Plot {
+            let mut plot = egui::plot::Plot::new("Benchmark");
+            for item_index in 0..num_of_items {
+                plot = plot.line(egui::plot::Line::new(
+                    egui::plot::Values::from_explicit_callback(
+                        move |x| x + item_index as f64,
+                        f64::NEG_INFINITY..=f64::INFINITY,
+                        num_of_points as usize,
+                    ),
+                ));
+            }
+            plot
+        }
+
+        let mut ctx = egui::CtxRef::default();
+        let mut group = c.benchmark_group("plots");
+        group
+            .sample_size(1000)
+            .measurement_time(std::time::Duration::from_secs(15));
+        let mut run_plot_bench =
+            |name: &str,
+             num_of_items: u32,
+             item_size: u32,
+             plot: fn(u32, u32) -> egui::plot::Plot| {
+                group.bench_function(name, |b| {
+                    b.iter(|| {
+                        let mut input = raw_input.clone();
+                        input
+                            .events
+                            .push(egui::Event::PointerMoved(egui::Pos2::new(250.0, 250.0)));
+                        ctx.begin_frame(input);
+
+                        egui::CentralPanel::default().show(&ctx, |ui| {
+                            ui.add(plot(num_of_items, item_size));
+                        });
+
+                        ctx.end_frame()
+                    })
+                });
+            };
+
+        let size_matrix = [
+            [10, 10],
+            [10, 100],
+            [10, 1000],
+            [10, 10000],
+            [100, 10],
+            [100, 100],
+            [100, 1000],
+            [1000, 10],
+            [1000, 100],
+            [10000, 10],
+        ];
+        for [num_of_items, item_size] in size_matrix {
+            run_plot_bench(
+                &format!("plot_{}x{}_points", num_of_items, item_size),
+                num_of_items,
+                item_size,
+                points_plot,
+            );
+            run_plot_bench(
+                &format!("plot_{}x{}_lines", num_of_items, item_size),
+                num_of_items,
+                item_size,
+                lines_plot,
+            );
+        }
+        group.finish();
     }
 }
 
