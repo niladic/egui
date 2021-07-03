@@ -126,6 +126,18 @@ pub fn criterion_benchmark(c: &mut Criterion) {
             plot
         }
 
+        fn bars_plot(num_of_items: u32, num_of_bars: u32) -> egui::plot::Plot {
+            let mut plot = egui::plot::Plot::new("Benchmark");
+            for item_index in 0..num_of_items {
+                plot = plot.barchart(egui::plot::BarChart::new(
+                    (0..num_of_bars)
+                        .map(|i| egui::plot::Bar::new(i as f64, 1.0).base_offset(item_index as f64))
+                        .collect(),
+                ));
+            }
+            plot
+        }
+
         let mut ctx = egui::CtxRef::default();
         let mut group = c.benchmark_group("plots");
         group
@@ -177,6 +189,12 @@ pub fn criterion_benchmark(c: &mut Criterion) {
                 num_of_items,
                 item_size,
                 lines_plot,
+            );
+            run_plot_bench(
+                &format!("plot_{}x{}_bars", num_of_items, item_size),
+                num_of_items,
+                item_size,
+                bars_plot,
             );
         }
         group.finish();
