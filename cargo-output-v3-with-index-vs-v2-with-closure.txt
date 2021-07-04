@@ -1,0 +1,310 @@
+WARNING: HTML report generation will become a non-default optional feature in Criterion.rs 0.4.0.
+This feature is being moved to cargo-criterion (https://github.com/bheisler/cargo-criterion) and will be optional in a future version of Criterion.rs. To silence this warning, either switch to cargo-criterion or enable the 'html_reports' feature in your Cargo.toml.
+
+WARNING: In Criterion.rs 0.4.0, running criterion benchmarks outside of cargo-criterion will become a default optional feature.
+The statistical analysis and reporting is being moved to cargo-criterion (https://github.com/bheisler/cargo-criterion) and will be optional in a future version of Criterion.rs. To silence this warning, either switch to cargo-criterion or enable the 'cargo_bench_support' feature in your Cargo.toml.
+
+Gnuplot not found, using plotters backend
+Benchmarking plots/plot_10x10_points
+Benchmarking plots/plot_10x10_points: Warming up for 3.0000 s
+Benchmarking plots/plot_10x10_points: Collecting 1000 samples in estimated 15.147 s (64k iterations)
+Benchmarking plots/plot_10x10_points: Analyzing
+plots/plot_10x10_points time:   [235.97 us 236.63 us 237.29 us]
+                        change: [+2.1248% +2.5135% +2.8912%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking plots/plot_10x10_lines
+Benchmarking plots/plot_10x10_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_10x10_lines: Collecting 1000 samples in estimated 15.115 s (63k iterations)
+Benchmarking plots/plot_10x10_lines: Analyzing
+plots/plot_10x10_lines  time:   [232.89 us 233.45 us 234.03 us]
+                        change: [-1.7911% -1.4776% -1.1657%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking plots/plot_10x10_bars
+Benchmarking plots/plot_10x10_bars: Warming up for 3.0000 s
+Benchmarking plots/plot_10x10_bars: Collecting 1000 samples in estimated 15.130 s (57k iterations)
+Benchmarking plots/plot_10x10_bars: Analyzing
+plots/plot_10x10_bars   time:   [265.42 us 266.12 us 266.82 us]
+                        change: [+7.2934% +7.6458% +8.0092%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking plots/plot_10x100_points
+Benchmarking plots/plot_10x100_points: Warming up for 3.0000 s
+Benchmarking plots/plot_10x100_points: Collecting 1000 samples in estimated 15.220 s (52k iterations)
+Benchmarking plots/plot_10x100_points: Analyzing
+plots/plot_10x100_points
+                        time:   [297.19 us 297.94 us 298.70 us]
+                        change: [+3.7555% +4.1182% +4.4703%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 1000 measurements (0.20%)
+  2 (0.20%) high mild
+Benchmarking plots/plot_10x100_lines
+Benchmarking plots/plot_10x100_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_10x100_lines: Collecting 1000 samples in estimated 15.067 s (59k iterations)
+Benchmarking plots/plot_10x100_lines: Analyzing
+plots/plot_10x100_lines time:   [248.65 us 249.07 us 249.49 us]
+                        change: [+3.3073% +3.5914% +3.8909%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 21 outliers among 1000 measurements (2.10%)
+  17 (1.70%) low mild
+  2 (0.20%) high mild
+  2 (0.20%) high severe
+Benchmarking plots/plot_10x100_bars
+Benchmarking plots/plot_10x100_bars: Warming up for 3.0000 s
+Benchmarking plots/plot_10x100_bars: Collecting 1000 samples in estimated 15.147 s (35k iterations)
+Benchmarking plots/plot_10x100_bars: Analyzing
+plots/plot_10x100_bars  time:   [430.27 us 431.24 us 432.21 us]
+                        change: [+0.6315% +0.9583% +1.2801%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 1 outliers among 1000 measurements (0.10%)
+  1 (0.10%) high mild
+Benchmarking plots/plot_10x1000_points
+Benchmarking plots/plot_10x1000_points: Warming up for 3.0000 s
+Benchmarking plots/plot_10x1000_points: Collecting 1000 samples in estimated 15.110 s (23k iterations)
+Benchmarking plots/plot_10x1000_points: Analyzing
+plots/plot_10x1000_points
+                        time:   [663.62 us 665.48 us 667.37 us]
+                        change: [+5.0891% +5.4862% +5.8597%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 1000 measurements (0.10%)
+  1 (0.10%) high mild
+Benchmarking plots/plot_10x1000_lines
+Benchmarking plots/plot_10x1000_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_10x1000_lines: Collecting 1000 samples in estimated 15.021 s (44k iterations)
+Benchmarking plots/plot_10x1000_lines: Analyzing
+plots/plot_10x1000_lines
+                        time:   [329.30 us 330.12 us 330.93 us]
+                        change: [+3.4292% +3.7567% +4.1070%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 1000 measurements (0.20%)
+  2 (0.20%) high mild
+Benchmarking plots/plot_10x1000_bars
+Benchmarking plots/plot_10x1000_bars: Warming up for 3.0000 s
+Benchmarking plots/plot_10x1000_bars: Collecting 1000 samples in estimated 15.910 s (7000 iterations)
+Benchmarking plots/plot_10x1000_bars: Analyzing
+plots/plot_10x1000_bars time:   [2.1271 ms 2.1318 ms 2.1365 ms]
+                        change: [+2.6721% +3.0778% +3.4985%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking plots/plot_10x10000_points
+Benchmarking plots/plot_10x10000_points: Warming up for 3.0000 s
+Benchmarking plots/plot_10x10000_points: Collecting 1000 samples in estimated 18.983 s (2000 iterations)
+Benchmarking plots/plot_10x10000_points: Analyzing
+plots/plot_10x10000_points
+                        time:   [8.9677 ms 8.9815 ms 8.9954 ms]
+                        change: [+3.7399% +3.9674% +4.1804%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 28 outliers among 1000 measurements (2.80%)
+  1 (0.10%) low severe
+  16 (1.60%) low mild
+  10 (1.00%) high mild
+  1 (0.10%) high severe
+Benchmarking plots/plot_10x10000_lines
+Benchmarking plots/plot_10x10000_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_10x10000_lines: Collecting 1000 samples in estimated 15.592 s (12k iterations)
+Benchmarking plots/plot_10x10000_lines: Analyzing
+plots/plot_10x10000_lines
+                        time:   [1.1915 ms 1.1951 ms 1.1988 ms]
+                        change: [+0.7281% +1.1913% +1.6684%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 2 outliers among 1000 measurements (0.20%)
+  2 (0.20%) high mild
+Benchmarking plots/plot_10x10000_bars
+Benchmarking plots/plot_10x10000_bars: Warming up for 3.0000 s
+
+Warning: Unable to complete 1000 samples in 15.0s. You may wish to increase target time to 27.4s, or reduce sample count to 540.
+Benchmarking plots/plot_10x10000_bars: Collecting 1000 samples in estimated 27.423 s (1000 iterations)
+Benchmarking plots/plot_10x10000_bars: Analyzing
+plots/plot_10x10000_bars
+                        time:   [23.258 ms 23.296 ms 23.335 ms]
+                        change: [-2.0501% -1.8311% -1.6026%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 8 outliers among 1000 measurements (0.80%)
+  5 (0.50%) low mild
+  3 (0.30%) high mild
+Benchmarking plots/plot_100x10_points
+Benchmarking plots/plot_100x10_points: Warming up for 3.0000 s
+Benchmarking plots/plot_100x10_points: Collecting 1000 samples in estimated 15.129 s (40k iterations)
+Benchmarking plots/plot_100x10_points: Analyzing
+plots/plot_100x10_points
+                        time:   [323.24 us 323.92 us 324.60 us]
+                        change: [+1.3680% +1.6926% +2.0099%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 4 outliers among 1000 measurements (0.40%)
+  4 (0.40%) high mild
+Benchmarking plots/plot_100x10_lines
+Benchmarking plots/plot_100x10_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_100x10_lines: Collecting 1000 samples in estimated 15.315 s (46k iterations)
+Benchmarking plots/plot_100x10_lines: Analyzing
+plots/plot_100x10_lines time:   [306.85 us 307.55 us 308.23 us]
+                        change: [+0.5021% +0.7749% +1.0464%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 1 outliers among 1000 measurements (0.10%)
+  1 (0.10%) high mild
+Benchmarking plots/plot_100x10_bars
+Benchmarking plots/plot_100x10_bars: Warming up for 3.0000 s
+Benchmarking plots/plot_100x10_bars: Collecting 1000 samples in estimated 15.436 s (29k iterations)
+Benchmarking plots/plot_100x10_bars: Analyzing
+plots/plot_100x10_bars  time:   [460.74 us 461.70 us 462.66 us]
+                        change: [-1.1462% -0.9036% -0.6585%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 1 outliers among 1000 measurements (0.10%)
+  1 (0.10%) high mild
+Benchmarking plots/plot_100x100_points
+Benchmarking plots/plot_100x100_points: Warming up for 3.0000 s
+Benchmarking plots/plot_100x100_points: Collecting 1000 samples in estimated 15.006 s (17k iterations)
+Benchmarking plots/plot_100x100_points: Analyzing
+plots/plot_100x100_points
+                        time:   [711.92 us 713.06 us 714.20 us]
+                        change: [+3.4096% +3.6208% +3.8275%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 9 outliers among 1000 measurements (0.90%)
+  3 (0.30%) low mild
+  5 (0.50%) high mild
+  1 (0.10%) high severe
+Benchmarking plots/plot_100x100_lines
+Benchmarking plots/plot_100x100_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_100x100_lines: Collecting 1000 samples in estimated 15.321 s (32k iterations)
+Benchmarking plots/plot_100x100_lines: Analyzing
+plots/plot_100x100_lines
+                        time:   [396.73 us 397.45 us 398.16 us]
+                        change: [+0.3874% +0.6204% +0.8492%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Benchmarking plots/plot_100x100_bars
+Benchmarking plots/plot_100x100_bars: Warming up for 3.0000 s
+Benchmarking plots/plot_100x100_bars: Collecting 1000 samples in estimated 17.139 s (7000 iterations)
+Benchmarking plots/plot_100x100_bars: Analyzing
+plots/plot_100x100_bars time:   [2.0906 ms 2.0944 ms 2.0981 ms]
+                        change: [+0.3310% +0.6112% +0.8835%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Benchmarking plots/plot_100x1000_points
+Benchmarking plots/plot_100x1000_points: Warming up for 3.0000 s
+Benchmarking plots/plot_100x1000_points: Collecting 1000 samples in estimated 25.396 s (2000 iterations)
+Benchmarking plots/plot_100x1000_points: Analyzing
+plots/plot_100x1000_points
+                        time:   [7.9348 ms 7.9727 ms 8.0120 ms]
+                        change: [+5.3638% +6.0930% +6.8506%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 144 outliers among 1000 measurements (14.40%)
+  61 (6.10%) high mild
+  83 (8.30%) high severe
+Benchmarking plots/plot_100x1000_lines
+Benchmarking plots/plot_100x1000_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_100x1000_lines: Collecting 1000 samples in estimated 15.685 s (10k iterations)
+Benchmarking plots/plot_100x1000_lines: Analyzing
+plots/plot_100x1000_lines
+                        time:   [1.2924 ms 1.2945 ms 1.2965 ms]
+                        change: [+6.6488% +6.8730% +7.1002%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 26 outliers among 1000 measurements (2.60%)
+  9 (0.90%) low mild
+  15 (1.50%) high mild
+  2 (0.20%) high severe
+Benchmarking plots/plot_100x1000_bars
+Benchmarking plots/plot_100x1000_bars: Warming up for 3.0000 s
+
+Warning: Unable to complete 1000 samples in 15.0s. You may wish to increase target time to 30.1s, or reduce sample count to 490.
+Benchmarking plots/plot_100x1000_bars: Collecting 1000 samples in estimated 30.118 s (1000 iterations)
+Benchmarking plots/plot_100x1000_bars: Analyzing
+plots/plot_100x1000_bars
+                        time:   [23.860 ms 23.902 ms 23.944 ms]
+                        change: [-0.8026% -0.5515% -0.3284%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 10 outliers among 1000 measurements (1.00%)
+  8 (0.80%) low mild
+  2 (0.20%) high mild
+Benchmarking plots/plot_1000x10_points
+Benchmarking plots/plot_1000x10_points: Warming up for 3.0000 s
+Benchmarking plots/plot_1000x10_points: Collecting 1000 samples in estimated 15.339 s (13k iterations)
+Benchmarking plots/plot_1000x10_points: Analyzing
+plots/plot_1000x10_points
+                        time:   [1.0327 ms 1.0348 ms 1.0368 ms]
+                        change: [-0.8222% -0.5036% -0.1831%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 2 outliers among 1000 measurements (0.20%)
+  1 (0.10%) high mild
+  1 (0.10%) high severe
+Benchmarking plots/plot_1000x10_lines
+Benchmarking plots/plot_1000x10_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_1000x10_lines: Collecting 1000 samples in estimated 15.198 s (14k iterations)
+Benchmarking plots/plot_1000x10_lines: Analyzing
+plots/plot_1000x10_lines
+                        time:   [966.68 us 968.49 us 970.33 us]
+                        change: [-3.6783% -3.4024% -3.1245%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking plots/plot_1000x10_bars
+Benchmarking plots/plot_1000x10_bars: Warming up for 3.0000 s
+Benchmarking plots/plot_1000x10_bars: Collecting 1000 samples in estimated 15.366 s (5000 iterations)
+Benchmarking plots/plot_1000x10_bars: Analyzing
+plots/plot_1000x10_bars time:   [2.4540 ms 2.4586 ms 2.4631 ms]
+                        change: [-1.0532% -0.8139% -0.5818%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 1 outliers among 1000 measurements (0.10%)
+  1 (0.10%) high severe
+Benchmarking plots/plot_1000x100_points
+Benchmarking plots/plot_1000x100_points: Warming up for 3.0000 s
+Benchmarking plots/plot_1000x100_points: Collecting 1000 samples in estimated 19.638 s (2000 iterations)
+Benchmarking plots/plot_1000x100_points: Analyzing
+plots/plot_1000x100_points
+                        time:   [8.4046 ms 8.4411 ms 8.4782 ms]
+                        change: [+8.4537% +8.9707% +9.5030%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 89 outliers among 1000 measurements (8.90%)
+  89 (8.90%) high mild
+Benchmarking plots/plot_1000x100_lines
+Benchmarking plots/plot_1000x100_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_1000x100_lines: Collecting 1000 samples in estimated 15.012 s (7000 iterations)
+Benchmarking plots/plot_1000x100_lines: Analyzing
+plots/plot_1000x100_lines
+                        time:   [1.8471 ms 1.8510 ms 1.8550 ms]
+                        change: [+1.9974% +2.3039% +2.5953%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking plots/plot_1000x100_bars
+Benchmarking plots/plot_1000x100_bars: Warming up for 3.0000 s
+
+Warning: Unable to complete 1000 samples in 15.0s. You may wish to increase target time to 27.0s, or reduce sample count to 550.
+Benchmarking plots/plot_1000x100_bars: Collecting 1000 samples in estimated 27.003 s (1000 iterations)
+Benchmarking plots/plot_1000x100_bars: Analyzing
+plots/plot_1000x100_bars
+                        time:   [22.599 ms 22.634 ms 22.669 ms]
+                        change: [-0.6941% -0.4870% -0.2816%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 23 outliers among 1000 measurements (2.30%)
+  9 (0.90%) low mild
+  11 (1.10%) high mild
+  3 (0.30%) high severe
+Benchmarking plots/plot_10000x10_points
+Benchmarking plots/plot_10000x10_points: Warming up for 3.0000 s
+
+Warning: Unable to complete 1000 samples in 15.0s. You may wish to increase target time to 16.1s, or reduce sample count to 920.
+Benchmarking plots/plot_10000x10_points: Collecting 1000 samples in estimated 16.131 s (1000 iterations)
+Benchmarking plots/plot_10000x10_points: Analyzing
+plots/plot_10000x10_points
+                        time:   [14.102 ms 14.121 ms 14.139 ms]
+                        change: [+1.5462% +1.7689% +1.9863%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 98 outliers among 1000 measurements (9.80%)
+  24 (2.40%) low severe
+  11 (1.10%) low mild
+  46 (4.60%) high mild
+  17 (1.70%) high severe
+Benchmarking plots/plot_10000x10_lines
+Benchmarking plots/plot_10000x10_lines: Warming up for 3.0000 s
+Benchmarking plots/plot_10000x10_lines: Collecting 1000 samples in estimated 19.727 s (2000 iterations)
+Benchmarking plots/plot_10000x10_lines: Analyzing
+plots/plot_10000x10_lines
+                        time:   [8.5829 ms 8.5977 ms 8.6126 ms]
+                        change: [-4.0049% -3.7550% -3.5148%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking plots/plot_10000x10_bars
+Benchmarking plots/plot_10000x10_bars: Warming up for 3.0000 s
+
+Warning: Unable to complete 1000 samples in 15.0s. You may wish to increase target time to 35.7s, or reduce sample count to 420.
+Benchmarking plots/plot_10000x10_bars: Collecting 1000 samples in estimated 35.708 s (1000 iterations)
+Benchmarking plots/plot_10000x10_bars: Analyzing
+plots/plot_10000x10_bars
+                        time:   [30.878 ms 30.926 ms 30.974 ms]
+                        change: [-2.2272% -1.9952% -1.7646%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 17 outliers among 1000 measurements (1.70%)
+  10 (1.00%) low mild
+  6 (0.60%) high mild
+  1 (0.10%) high severe
+
